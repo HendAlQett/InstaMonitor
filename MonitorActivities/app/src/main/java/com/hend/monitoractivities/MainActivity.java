@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,8 +29,11 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    final String LIST_KEY= "ActivitiesList";
 
-    List<ActivityMonitored> activityMonitoredList;
+
+
+    ArrayList<ActivityMonitored> activityMonitoredList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,36 +41,58 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        activityMonitoredList= new ArrayList<>();
+        if(savedInstanceState == null || !savedInstanceState.containsKey(LIST_KEY)) {
 
-        try {
-            ActivityInfo[] list = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_ACTIVITIES).activities;
+            activityMonitoredList= new ArrayList<>();
+            try {
+                ActivityInfo[] list = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_ACTIVITIES).activities;
 
-            for(int i = 0;i< list.length;i++)
-            {
-//                System.out.println("List of running activities"+list[i].name);
-                String activityLongName =  list[i].name;
-                String activityName = activityLongName.replace(list[i].packageName+".","");
-                ActivityMonitored activityMonitored = new ActivityMonitored(activityName);
-                activityMonitoredList.add(activityMonitored);
-//                System.out.println("List of running activities "+activityName);
-                Log.d("Monitor",activityName);
+                for(int i = 0;i< list.length;i++)
+                {
+                    String activityLongName =  list[i].name;
+                    String activityName = activityLongName.replace(list[i].packageName+".","");
+                    ActivityMonitored activityMonitored = new ActivityMonitored(activityName);
+                    activityMonitoredList.add(activityMonitored);
+                    Log.d("Monitor",activityName);
 
+                }
+            }
+
+            catch (PackageManager.NameNotFoundException e) {
+
+                e.printStackTrace();
             }
         }
-
-        catch (PackageManager.NameNotFoundException e) {
-
-            e.printStackTrace();
+        else {
+            activityMonitoredList = savedInstanceState.getParcelableArrayList(LIST_KEY);
         }
 
-//
+//        activityMonitoredList= new ArrayList<>();
 
-        ActivitiesRecyclerAdapter adapter = new ActivitiesRecyclerAdapter(activityMonitoredList);
+
+
+
+
+
+        ActivitiesRecyclerAdapter adapter = new ActivitiesRecyclerAdapter(this,activityMonitoredList);
         adapter.setHasStableIds(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+
+        outState.putParcelableArrayList(LIST_KEY,activityMonitoredList);
+        super.onSaveInstanceState(outState, outPersistentState);
+
+    }
+
+    public static void updateData(List<ActivityMonitored> activityMonitoredList) {
+        activityMonitoredList.clear();
+        activityMonitoredList.addAll(activityMonitoredList);
 
     }
 
