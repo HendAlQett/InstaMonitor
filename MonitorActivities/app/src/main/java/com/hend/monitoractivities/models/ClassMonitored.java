@@ -4,15 +4,20 @@ package com.hend.monitoractivities.models;
  * Created by hend on 6/2/16.
  */
 public class ClassMonitored {
-    String className;
+    String classSimpleName;
     long timeOpened;
 
-    public String getClassName() {
-        return className;
+    public ClassMonitored(String classSimpleName, long timeOpened) {
+        this.classSimpleName = classSimpleName;
+        this.timeOpened = timeOpened;
     }
 
-    public void setClassName(String className) {
-        this.className = className;
+    public String getClassSimpleName() {
+        return classSimpleName;
+    }
+
+    public void setClassSimpleName(String classSimpleName) {
+        this.classSimpleName = classSimpleName;
     }
 
     public long getTimeOpened() {
