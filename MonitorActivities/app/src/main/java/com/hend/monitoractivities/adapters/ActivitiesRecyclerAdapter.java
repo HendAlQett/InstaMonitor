@@ -1,5 +1,6 @@
 package com.hend.monitoractivities.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.hend.instamonitor.Monitor;
 import com.hend.monitoractivities.R;
 import com.hend.monitoractivities.models.ActivityMonitored;
 
@@ -16,13 +18,15 @@ import java.util.List;
 /**
  * Created by hend on 6/2/16.
  */
-public class ActivitiesRecyclerAdapter  extends RecyclerView.Adapter<ActivitiesRecyclerAdapter.ViewHolder>{
+public class ActivitiesRecyclerAdapter extends RecyclerView.Adapter<ActivitiesRecyclerAdapter.ViewHolder> {
 
-    private List<ActivityMonitored>  activityList;
+    private List<ActivityMonitored> activityList;
 
+    Context context;
 
-    public ActivitiesRecyclerAdapter(List<ActivityMonitored> activityList) {
-        this.activityList= activityList;
+    public ActivitiesRecyclerAdapter(Context context, List<ActivityMonitored> activityList) {
+        this.context = context;
+        this.activityList = activityList;
     }
 
     @Override
@@ -43,7 +47,19 @@ public class ActivitiesRecyclerAdapter  extends RecyclerView.Adapter<ActivitiesR
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 activityItem.setMonitored(isChecked);
-                activityList.add(position,activityItem);
+                activityList.set(position, activityItem);
+//                if (context instanceof MainActivity)
+//                {
+//                    MainActivity.updateData(activityList);
+//                }
+
+                if (!isChecked) {
+                    Monitor.getInstance().ignoreMonitor(context,activityItem.getActivitySimpleName());
+
+                }
+                if (isChecked) {
+                    Monitor.getInstance().cancelIgnoreMonitor(activityItem.getActivitySimpleName());
+                }
             }
         });
     }
@@ -53,16 +69,22 @@ public class ActivitiesRecyclerAdapter  extends RecyclerView.Adapter<ActivitiesR
         return activityList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+
+    public static class ViewHolder extends RecyclerView.ViewHolder  {
 
         public TextView tvActivity;
         public CheckBox cbMonitor;
+
 
         public ViewHolder(View view) {
             super(view);
 
             tvActivity = (TextView) view.findViewById(R.id.tvActivity);
             cbMonitor = (CheckBox) view.findViewById(R.id.cbMonitor);
+
         }
+
+
     }
 }
