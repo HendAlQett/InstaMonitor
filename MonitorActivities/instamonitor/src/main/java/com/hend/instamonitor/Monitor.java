@@ -98,38 +98,18 @@ public class Monitor implements FragmentLifecycleCallbacks {
         });
     }
 
-//   public void registerFragmentLifeCycleCallback() {
-//        application.registerFragmentLifecycleCallbacks(new MonitorApplication.FragmentLifecycleCallbacks() {
-//            long timeStartFragment, timeEndFragment;
-//            @Override
-//            public void onFragmentStarted(Fragment fragment) {
-////                if (!ignoredViews.contains(fragment.getClass().getSimpleName())) {
-//                    timeStartFragment = System.currentTimeMillis();
-//                    Log.d(TAG, Long.toString(timeStartFragment));
-//                Log.d(TAG, fragment.getClass().getSimpleName());
-////                }
-//            }
-//            @Override
-//            public void onFragmentStopped(Fragment fragment) {
-//                timeEndFragment = System.currentTimeMillis();
-//                float time = openedTimeInSeconds(timeStartFragment, timeEndFragment);
-//                Log.d(TAG, Float.toString(time));
-//
-//            }
-//        });
-//    }
 
 
-    public void ignoreMonitor(Class classView, Context context) {
-        String key = classView.getClass().getSimpleName();
+    public void ignoreMonitor( Context context,String classSimpleName) {
+        String key = classSimpleName;
         ignoredViews.add(key);
         clearTimePrefForView(context, key);
     }
 
-    public void cancelIgnoreMonitor(Class classView) {
-        String className = classView.getClass().getSimpleName();
-        if (ignoredViews.contains(className)) {
-            ignoredViews.remove(className);
+    public void cancelIgnoreMonitor(String classSimpleName) {
+
+        if (ignoredViews.contains(classSimpleName)) {
+            ignoredViews.remove(classSimpleName);
         }
     }
 
@@ -147,6 +127,7 @@ public class Monitor implements FragmentLifecycleCallbacks {
         //TODO save in preference without converting to Seconds
         timeEndFragment = System.currentTimeMillis();
         long time = openedTime(timeStartFragment, timeEndFragment);
+        setTimePref(application, fragment.getClass().getSimpleName(), time);
         Log.d(TAG, fragment.getClass().getSimpleName() + " " + Long.toString(time));
     }
 
@@ -196,4 +177,16 @@ public class Monitor implements FragmentLifecycleCallbacks {
         editor.commit();
 
     }
+
+    public boolean ignoreContainsActivity(String activitySimpleName)
+    {
+        if (ignoredViews.contains(activitySimpleName))
+        {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
 }
