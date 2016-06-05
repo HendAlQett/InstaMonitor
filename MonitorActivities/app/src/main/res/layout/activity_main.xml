@@ -6,12 +6,6 @@
     android:layout_height="match_parent">
 
 
-    <!--<FrameLayout-->
-    <!--android:id="@+id/toolbar_container"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="112dp"-->
-    <!--android:background="?colorPrimary"-->
-    <!--android:elevation="8dp">-->
     <android.support.design.widget.AppBarLayout
         android:id="@+id/toolbar_container"
         android:layout_width="match_parent"
@@ -49,7 +43,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
+        android:layout_marginLeft="@dimen/recycler_margin"
+        android:layout_marginRight="@dimen/recycler_margin"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -57,18 +52,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-        <Button
-            android:id="@+id/btnClear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="16dp"
-            android:backgroundTint="@color/colorAccent"
-            android:text="Clear Stats"
-            android:layout_centerHorizontal="true"
-            android:textColor="@android:color/white"
-            android:onClick="onClick"
-            android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/btnClear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_margin="16dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/colorAccent"
+                android:onClick="onClick"
+                android:text="Clear Stats"
+                android:textColor="@android:color/white" />
 
             <Button
                 android:id="@+id/btnView"
@@ -76,28 +72,20 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="16dp"
-                android:backgroundTint="@color/colorAccent"
-                android:text="View Stats"
                 android:layout_weight="1"
-                android:textColor="@android:color/white"
+                android:backgroundTint="@color/colorAccent"
                 android:onClick="onClick"
-                />
+                android:text="View Stats"
+                android:textColor="@android:color/white" />
 
         </LinearLayout>
 
-        <!--<fragment-->
-            <!--android:id="@+id/mainFragment"-->
-            <!--android:name="com.hend.monitoractivities.NextFragment"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_below="@+id/btnClear"-->
-            <!--/>-->
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical"
-            android:id="@+id/recycler_view"
-            android:layout_below="@+id/llButtons"/>
+            android:layout_below="@+id/llButtons"
+            android:scrollbars="vertical" />
 
 
     </RelativeLayout>

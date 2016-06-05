@@ -1,0 +1,5 @@
+<resources>
+    <!-- Land screen margins, per the Android Design guidelines. -->
+    <dimen name="recycler_margin">64dp</dimen>
+
+</resources>
