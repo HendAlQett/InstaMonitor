@@ -21,7 +21,6 @@
             app:expandedTitleMarginStart="56dp"
             app:expandedTitleMarginTop="-40dp"
             app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
-
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:title="@string/app_name">
 
@@ -39,26 +38,13 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-
-
-
-
-        <fragment
+    <fragment
         android:id="@+id/mainFragment"
         android:name="com.hend.monitoractivities.NextFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
 
         />
-        <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:scrollbars="vertical"-->
-            <!--android:id="@+id/recycler_view"-->
-            <!--android:layout_below="@+id/llButtons"/>-->
-
-
-
 
 </android.support.design.widget.CoordinatorLayout>
