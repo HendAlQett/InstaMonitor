@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +16,6 @@ import com.hend.monitoractivities.adapters.ActivitiesRecyclerAdapter;
 import com.hend.monitoractivities.models.ActivityMonitored;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    ArrayList<ActivityMonitored> activityMonitoredList;
+    public static ArrayList<ActivityMonitored> activityMonitoredList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,12 +66,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
 //        activityMonitoredList= new ArrayList<>();
-
-
-
-
-
-
         ActivitiesRecyclerAdapter adapter = new ActivitiesRecyclerAdapter(this,activityMonitoredList);
         adapter.setHasStableIds(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -83,16 +75,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(LIST_KEY,activityMonitoredList);
-        super.onSaveInstanceState(outState, outPersistentState);
 
     }
 
-    public static void updateData(List<ActivityMonitored> activityMonitoredList) {
-        activityMonitoredList.clear();
-        activityMonitoredList.addAll(activityMonitoredList);
+    public static void updateData(int position, boolean isChecked) {
+//        activityMonitoredList.clear();
+        ActivityMonitored activityMonitored = activityMonitoredList.get(position);
+        activityMonitored.setMonitored(isChecked);
+        activityMonitoredList.set(position,activityMonitored);
 
     }
 

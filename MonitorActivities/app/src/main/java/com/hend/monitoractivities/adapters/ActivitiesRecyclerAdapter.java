@@ -10,6 +10,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.hend.instamonitor.Monitor;
+import com.hend.monitoractivities.MainActivity;
 import com.hend.monitoractivities.R;
 import com.hend.monitoractivities.models.ActivityMonitored;
 
@@ -48,17 +49,17 @@ public class ActivitiesRecyclerAdapter extends RecyclerView.Adapter<ActivitiesRe
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 activityItem.setMonitored(isChecked);
                 activityList.set(position, activityItem);
-//                if (context instanceof MainActivity)
-//                {
-//                    MainActivity.updateData(activityList);
-//                }
-
                 if (!isChecked) {
                     Monitor.getInstance().ignoreMonitor(context,activityItem.getActivitySimpleName());
 
                 }
-                if (isChecked) {
+                else if (isChecked) {
                     Monitor.getInstance().cancelIgnoreMonitor(activityItem.getActivitySimpleName());
+                }
+
+                if (context instanceof MainActivity)
+                {
+                    MainActivity.updateData(position,isChecked);
                 }
             }
         });
@@ -82,6 +83,7 @@ public class ActivitiesRecyclerAdapter extends RecyclerView.Adapter<ActivitiesRe
 
             tvActivity = (TextView) view.findViewById(R.id.tvActivity);
             cbMonitor = (CheckBox) view.findViewById(R.id.cbMonitor);
+
 
         }
 
