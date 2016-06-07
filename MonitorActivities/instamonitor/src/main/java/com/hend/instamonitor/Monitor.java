@@ -49,12 +49,6 @@ public class Monitor implements FragmentLifecycleCallbacks {
 
             @Override
             public void onActivityStarted(Activity activity) {
-                //TODO: before ignoring this I should calculate its time and add it to the application time
-//                if (!ignoredViews.contains(activity.getClass().getSimpleName())) {
-//                timeStartActivity = System.currentTimeMillis();
-//                Log.d(TAG, activity.getClass().getSimpleName() + " " + Long.toString(timeStartActivity));
-//                Log.d(TAG, activity.getClass().getSimpleName());
-//                }
             }
 
             @Override
@@ -76,14 +70,7 @@ public class Monitor implements FragmentLifecycleCallbacks {
 
             @Override
             public void onActivityStopped(Activity activity) {
-                //TODO save in preference without converting to Seconds
-//                timeEndActivity = System.currentTimeMillis();
-//                long time = openedTime(timeStartActivity, timeEndActivity);
-//                Log.d(TAG, activity.getClass().getSimpleName() + " " + Long.toString(time));
-//                setTimePref(application, APPLICATION_KEY, time);
-//                if (!ignoredViews.contains(activity.getClass().getSimpleName())) {
-//                    setTimePref(application, activity.getClass().getSimpleName(), time);
-//                }
+
             }
 
             @Override
@@ -124,7 +111,6 @@ public class Monitor implements FragmentLifecycleCallbacks {
 
     @Override
     public void onFragmentStopped(Fragment fragment) {
-        //TODO save in preference without converting to Seconds
         timeEndFragment = System.currentTimeMillis();
         long time = openedTime(timeStartFragment, timeEndFragment);
         setTimePref(application, fragment.getClass().getSimpleName(), time);

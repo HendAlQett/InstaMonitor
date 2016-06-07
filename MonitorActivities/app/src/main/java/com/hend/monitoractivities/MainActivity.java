@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             activityMonitoredList = savedInstanceState.getParcelableArrayList(LIST_KEY);
         }
 
-//        activityMonitoredList= new ArrayList<>();
+
         ActivitiesRecyclerAdapter adapter = new ActivitiesRecyclerAdapter(this,activityMonitoredList);
         adapter.setHasStableIds(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void updateData(int position, boolean isChecked) {
-//        activityMonitoredList.clear();
         ActivityMonitored activityMonitored = activityMonitoredList.get(position);
         activityMonitored.setMonitored(isChecked);
         activityMonitoredList.set(position,activityMonitored);
